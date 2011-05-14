@@ -1,0 +1,14 @@
+(define regex-version
+  (if (version>=? (chicken-version) "4.6.2")
+      'total-irregex
+      'irregex-through-regex))
+
+
+(compile -s -O2 -d0 -D ,regex-version dict.scm -j dict)
+(compile -s -O2 -d0  dict.import.scm)
+
+(install-extension
+  'dict
+  '("dict.import.so" "dict.so")
+  '((version 2.4)
+    (documentation "dict.html")))
