@@ -296,9 +296,12 @@
   (define (parse-status-151 input)
     (let ((ws (string-index input #\space)))
       (unless ws (complain "Malformed status 151 response. Expected `word`" input))
+ 
       (let ((word (string-trim-both (string-take input ws) #\"))
             (ws2 (string-index input #\space (+ ws 1))))
-        (unless ws (complain "Malformed status 151 response. Expected `databasename`"  input))
+        
+        (unless ws2 (complain "Malformed status 151 response. Expected `databasename`"  input))
+   
         (let ((db (string-trim-both (string-take (string-drop input (+ ws 1)) (- ws2 (+ 1 ws))) #\"))
               (descr (string-trim-both (string-trim-both (string-drop input (+ 1 ws2)) #\space) #\")))
           (list word db descr)))))
