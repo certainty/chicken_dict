@@ -2,3 +2,4 @@
 (uri targz "https://bitbucket.org/certainty/{egg-name}/get/{egg-release}.tar.gz")
 (release "2.5")
 (release "2.6")
+(release "2.7")
