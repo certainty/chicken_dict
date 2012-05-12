@@ -5,6 +5,6 @@
  (category net)
  (license "MIT")
  (doc-from-wiki)
- (depends defstruct md5 utf8)
+ (depends defstruct md5 message-digest utf8)
  (test-depends test)
  (files ".hgignore" "dict.meta" "dict.release-info" "dict.scm" "dict.setup" "tests/example.scm" "tests/run.scm"))

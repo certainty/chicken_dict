@@ -30,7 +30,7 @@
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use test utf8 dict md5)
+(use test utf8 dict md5 message-digest)
 
 ;;some helpers
 (define (with-stubbed-io input proc)
@@ -224,7 +224,7 @@
                             (receive (s r) (!status con)
                               (list s r)))))
    ;;enable this once md5 has been ported to chicken 4
-    (define test-password (md5-digest (string-append "<test@example.org>" "test")))
+    (define test-password (message-digest-string (md5-primitive) (string-append "<test@example.org>" "test")))
 
     (test "authenticate success"
           `((output . ,(conc "AUTH test " test-password "\r\n"))

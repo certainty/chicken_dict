@@ -41,9 +41,9 @@
     make-connection connect disconnect connection-msg-id connection-server-capabilities 
     *current-log-port* !match !define !databases !strategies !server-information !database-information
     !help !status !quit !announce-client !authenticate)
-  
+
   (import scheme chicken)
-  (require-library tcp defstruct srfi-13 srfi-14 md5)
+  (require-library tcp defstruct srfi-13 srfi-14 md5 message-digest)
 
   (cond-expand
    (irregex-is-core-unit
@@ -79,7 +79,8 @@
       (if (string? obj) (string->sre obj) obj))))
   
   (import tcp defstruct
-          (only md5 md5-digest) 
+          (only md5 md5-primitive) 
+          (only message-digest message-digest-string) 
           (only srfi-14 char-set:digit)
           (only srfi-13 string-join string-index string-trim-right string-trim-both string-trim string-skip string-take string-drop)
 ;          (only regex string-split-fields)
@@ -457,7 +458,7 @@
        (status:authentication-successful? status)))
 
    (define (compute-password con password)
-     (md5-digest (string-append (connection-msg-id con) password)))
+     (message-digest-string (md5-primitive) (string-append (connection-msg-id con) password)))
 
 
   (define (connect server #!key (port (*default-port*)) (client "dict.egg for chicken scheme") (timeout #f))
